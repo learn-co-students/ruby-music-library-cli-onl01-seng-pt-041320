@@ -32,4 +32,19 @@ class Song
         end
     end
 
+    def self.new_from_filename (filename)
+        array = filename.split(" - ")
+        new_artist = Artist.find_or_create_by_name(array[0])
+        new_genre = Genre.find_or_create_by_name(array[2].chomp('.mp3'))
+        new_song = self.new(array[1], new_artist, new_genre)
+        new_song
+        #binding.pry
+    end
+
+    def self.create_from_filename (filename)
+        song = self.new_from_filename (filename)
+        song.save
+    end
+
+
 end
