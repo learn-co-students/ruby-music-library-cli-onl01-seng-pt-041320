@@ -8,13 +8,11 @@ class MusicLibraryController
     end
 
     def list_songs
-        #Song.all.sort {|a,b| a.name <=> b.name}.each.with_index(1) do |song, i|
-        #  puts "#{i}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
-        #end
-        library = Song.all.sort_by{|song| song.name}
+        
+        library = Song.all.sort{|a, b| a.name <=> b.name}.uniq
 
-        library.each_with_index(1) do |song| 
-            puts "#{library.index(song) + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
+        library.each.with_index(1) do |song, idx|
+            puts "#{idx}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
         end
       end
     
@@ -52,16 +50,15 @@ class MusicLibraryController
 
     def play_song
         puts "Which song number would you like to play?"
-        
         input = gets.chomp.to_i
-        
-        self.list_songs
 
-        if (1..songs.length).include?(input)
-            song = Song.all.sort{ |a, b| a.name <=> b.name }[input - 1]
+        if input > 0 && input <= Song.all.length
+            arr = Song.all.sort{|a, b| a.name <=> b.name}.uniq
+            if arr[input - 1] != nil
+                song = arr[input -1]
+                puts "Playing #{song.name} by #{song.artist.name}"
+            end
         end
-
-        puts "Playing #{song.name} by #{song.artist.name}" if song
     end
 
     def call
@@ -88,9 +85,11 @@ class MusicLibraryController
             when 'list genres'
                 self.list_genres
             when 'list artist'
-                self.list_artists
+                self.list_songs_by_artist
             when 'list genre'
-                self.list_genres
+                self.list_songs_by_genre
+            when 'play song'
+                self.play_song
             else
                 'Type in a valid request please'
             end
