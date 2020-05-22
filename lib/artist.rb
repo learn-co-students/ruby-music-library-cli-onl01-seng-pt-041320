@@ -1,3 +1,4 @@
+require 'pry'
 class Artist
   attr_accessor :name
   
@@ -30,9 +31,11 @@ class Artist
   end
   
   def add_song(song)
-    if song.artist == NIL
-      song.artist = self
-      @songs << song
-    end
+    @songs << song if @songs.none?(song)
+    song.artist = self if song.artist == nil  
+  end
+  
+  def genres 
+    self.songs.collect{|song| song.genre}.uniq
   end
 end
