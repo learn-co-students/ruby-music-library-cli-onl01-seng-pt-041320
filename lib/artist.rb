@@ -1,7 +1,8 @@
 require 'pry'
 class Artist
     extend Concerns::Findable 
-    attr_accessor :name, :songs 
+    attr_accessor :name 
+    attr_reader :songs 
     @@all = []
 
     def initialize(name)
@@ -34,7 +35,6 @@ class Artist
 
     #returns array of genres. gets genres from songs. artist has songs. no duplicates
     def genres
-        #binding.pry
         self.songs.collect{|song| song.genre}.uniq
     end 
         

@@ -1,6 +1,7 @@
 require 'pry'
 class Song
-    attr_accessor :name, :artist, :genre  
+    attr_accessor :name 
+    attr_reader :artist, :genre  
      
     @@all = []
 
@@ -26,11 +27,11 @@ class Song
     end  
     
     def self.new_from_filename(filename)
-        #binding.pry
         array = filename.chomp(".mp3").split(" - ")
-        song = self.new(array[1])
-        song.artist = Artist.find_or_create_by_name(array[0])
-        song.genre = Genre.find_or_create_by_name(array[2])
+        
+        artist = Artist.find_or_create_by_name(array[0])
+        genre = Genre.find_or_create_by_name(array[2])
+        song = self.new(array[1], artist, genre)
         song 
     end 
 
