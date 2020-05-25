@@ -44,13 +44,13 @@ class MusicLibraryController
 
     def list_songs_by_artist
         puts "Please enter the name of an artist:"
-        input = gets.chomp
+        input = gets
         artist = Artist.find_by_name(input)
-            if artist 
-                list = artist.sort{|song1, song2| song1.name <=> song2.name}
+            if artist == true
+                list = Song.all.sort{|song1, song2| song1.name.artist <=> song2.name.artist}
                 list.each.with_index(1){|song, index| puts "#{index}. " + "#{song.artist.name} - " + "#{song.name} - "}
             end    
- #        binding.pry
+   #     binding.pry
     end
 
 
