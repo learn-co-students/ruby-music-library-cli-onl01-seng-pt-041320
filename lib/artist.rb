@@ -1,7 +1,9 @@
+
 require_relative '../lib/concerns/Findable.rb'
 
 class Artist
     extend Concerns::Findable
+
     attr_accessor :name, :songs
 
     @@all = []
@@ -13,7 +15,9 @@ class Artist
     end
 
     def self.all
+
       @@all
+
     end
 
     def self.destroy_all
