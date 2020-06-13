@@ -68,39 +68,40 @@ class MusicLibraryController
 
   def sort(list)
     # abstract the #sort mehod
-    list.sort {|a, b} a.name <=> b.name
+    list.sort { |a, b| a.name <=> b.name }
   end
 
-  def list_songs_by_artist 
-    # asking the user to input an artist name 
-    puts "Please enter the name of an artist:"
-    artist = gets.strip 
+  def list_songs_by_artist
+    # asking the user to input an artist name
+    puts 'Please enter the name of an artist:'
+    artist = gets.strip
     # Print a list of artist songs, alphabetized by tittle.
-    artists =  Song.all.select! {|song| song.artist.name == artist}
-    sort(artists).each_with_index do |song, i| 
+    artists = Song.all.select! { |song| song.artist.name == artist }
+    sort(artists).each_with_index do |song, i|
       puts "#{i + 1}. #{song.name} - #{song.genre.name}"
     end
   end
 
-  def list_songs_by_genre 
-    # ask the user to input genre name 
-    puts "Please enter the name of a genre:"
-    genre = gets.strip 
+  def list_songs_by_genre
+    # ask the user to input genre name
+    puts 'Please enter the name of a genre:'
+    genre = gets.strip
     # Printing a list of genre's songs, alphabetized by title
-    genres = Song.all.select! {|song| song.genre.name  == genre}
+    genres = Song.all.select! { |song| song.genre.name == genre }
     sort(genres).each_with_index do |song, i|
       puts "#{i + 1}. #{song.artist.name} - #{song.name}"
     end
   end
 
-  def play_song 
-    # Asking user to chose a song 
-    puts "Which son number would you like to play?"
-    nimber = gets.strip.to_i 
+  def play_song
+    # Asking user to chose a song
+    puts 'Which son number would you like to play?'
+    nimber = gets.strip.to_i
     # Plays the selected song
-    sort(Song.all).each_with_index do |song, i| 
+    sort(Song.all).each_with_index do |song, i|
       puts "Playing #{song.name} by #{song.artist.name}"
       if i + 1 == number
-      end 
+      end
     end
+  end
 end
