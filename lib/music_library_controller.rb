@@ -8,6 +8,8 @@ class MusicLibraryController
     MusicImporter.new(path).import
   end
 
+  # List of inputs
+
   def call
     reply ''
     while reply != 'exit'
@@ -21,8 +23,9 @@ class MusicLibraryController
       puts "To quit, type 'exit'."
       puts 'What would you like to do?'
       reply = gets.strip
-      
+
       # Set the CLI commands
+
       case reply
       when 'list songs'
         list_songs
@@ -37,6 +40,22 @@ class MusicLibraryController
       when 'play song'
         play_song
       end
+    end
+  end
+
+  # CLI Methods
+
+  def list_songs
+    # need to sort each songs by name
+    sort(Song.all).each_with_index do |song, i|
+      puts "#{i + 1}. #{song.artist.name} - #{song.name} -#{song.genre.name}"
+    end
+  end
+
+  def list_artists
+    # need to sort each artisrs by name
+    sort(Artist.all).each_with_index do |artist, i|
+      puts "#{i + 1}. #{artist.name}"
     end
   end
 end
