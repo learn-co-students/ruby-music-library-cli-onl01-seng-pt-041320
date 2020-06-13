@@ -44,8 +44,7 @@ class Song
   end
 
   def self.find_or_create_by_name(name)
-    if !
-      find_by_name(name)
+    if !find_by_name(name)
       Song.create(name)
     else
       find_by_name(name)
@@ -53,14 +52,18 @@ class Song
   end
 
   def self.new_from_filename(file_name)
-    imported_song = file_name.split(" - ")[1]
-    imported_artist = file_name.split(" - ")[0]
-    imported_genre = file_name.split(" - ")[2].chomp(".mp3")
-
+    imported_song = file_name.split(' - ')[1]
+    imported_artist = file_name.split(' - ')[0]
+    imported_genre = file_name.split(' - ')[2].chomp('.mp3')
     artist = Artist.find_or_create_by_name(imported_artist)
     genre = Genre.find_or_create_by_name(imported_genre)
+
     Song.new(imported_song, artist, genre)
   end
 
-  
+  def self.create_from_filename(file_name)
+    song = new_from_filename(file_name)
+    song.save
+    song
+  end
 end
