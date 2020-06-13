@@ -93,5 +93,14 @@ class MusicLibraryController
     end
   end
 
-  
+  def play_song 
+    # Asking user to chose a song 
+    puts "Which son number would you like to play?"
+    nimber = gets.strip.to_i 
+    # Plays the selected song
+    sort(Song.all).each_with_index do |song, i| 
+      puts "Playing #{song.name} by #{song.artist.name}"
+      if i + 1 == number
+      end 
+    end
 end
