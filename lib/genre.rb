@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class Genre
-  attr_accessor :name
   extend Concerns::Findable
+
+  attr_accessor :name
+  attr_reader :songs
 
   @@all = []
 
   def initialize(name)
     @name = name
-    @song = []
+    @songs = []
   end
 
   def self.all
@@ -16,7 +18,7 @@ class Genre
   end
 
   def save
-    @@all << self
+    self.class.all << self
   end
 
   def self.destroy_all
@@ -29,9 +31,7 @@ class Genre
     genre
   end
 
-  attr_reader :songs
-
-  def artist
-    songs.map(&:artist) .uniq
+  def artists
+    songs.collect(&:artist).uniq
     end
 end
