@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class Artist
+  extend Concerns::Findable
+
   attr_accessor :name
-  extend Concerns::Findable # add extend to any class to store all the codes from different files into a module. passing all the method and instances from all classes to a module so they're all available thrught the whole cli.
+  attr_reader :songs
+  # add extend to any class to store all the codes from different files into a module. passing all the method and instances from all classes to a module so they're all available thrught the whole cli.
 
   @@all = []
 
@@ -16,11 +19,11 @@ class Artist
   end
 
   def save
-    @@all << self
+    self.class.all << self
   end
 
   def self.destroy_all
-    @@all.clear # remove all instances from array.
+    all.clear # remove all instances from array.
   end
 
   def self.create(name)
@@ -29,10 +32,14 @@ class Artist
     artist
   end
 
+  #=> ! negation if the instance is not == to the instance itself then unique array made with the new instance.
   def add_song(song)
-    unless song.artist
-      song.artist = self
-    end #=> ! negation if the instance is not == to the instance itself then unique array made with the new instance.
-    self.song.map(&:genre).uniq # call the class itself on the song instance and map it out by genre and return a unique array.
+    song.artist = self unless song.artist
+    songs << song unless songs.include?(song)
   end
+
+  def genres
+    songs.collect(&:genre).uniq
+  end
+  # call the class itself on the song instance and map it out by genre and return a unique array.
 end
